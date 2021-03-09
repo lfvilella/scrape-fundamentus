@@ -1,19 +1,23 @@
-# import time
+""" Assests.py
 
-# from selenium.common.exceptions import TimeoutException
-# from selenium.webdriver.common.action_chains import ActionChains
-# from selenium.webdriver.common.by import By
+This module extedens the BaseScraper from utils/webdriver.py
+  and implements all scrape logic from website fundamentus.
+"""
+
 from selenium.webdriver.common.keys import Keys
-
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.support.ui import WebDriverWait
 
 from utils import elements, webdriver
 
 
 class AssetsScraper:
+    _URL = 'https://fundamentus.com.br/'
+
     def __init__(self, assets: list):
-        self.url = 'https://fundamentus.com.br/'
+        """ Init
+
+        Args:
+            assets (list): list of assets, for example: ['TICKET1', 'TICKET2']
+        """
 
         self.scraper = webdriver.BaseScraper()
         self.driver = self.scraper.driver
@@ -21,7 +25,7 @@ class AssetsScraper:
 
         self.start(assets)
 
-    def start(self, assets):
+    def start(self, assets: list):
         self.open_site()
 
         for ticket in assets:
@@ -40,13 +44,45 @@ class AssetsScraper:
         _ticket = self.scraper.get_by_xpath(
             xpath=elements.AssetsPage.TICKET
         ).text
+        _subsector = self.scraper.get_by_xpath(
+            xpath=elements.AssetsPage.SUBSECTOR
+        ).text
+        _div_yield = self.scraper.get_by_xpath(
+            xpath=elements.AssetsPage.DIV_YIELD
+        ).text
+        _p_l = self.scraper.get_by_xpath(xpath=elements.AssetsPage.P_L).text
+        _p_vp = self.scraper.get_by_xpath(xpath=elements.AssetsPage.P_VP).text
+        _ebitda = self.scraper.get_by_xpath(
+            xpath=elements.AssetsPage.EBITDA
+        ).text
+        _roe = self.scraper.get_by_xpath(xpath=elements.AssetsPage.ROE).text
+        _roic = self.scraper.get_by_xpath(xpath=elements.AssetsPage.ROIC).text
+        _min_price = self.scraper.get_by_xpath(
+            xpath=elements.AssetsPage.MIN_PRICE
+        ).text
+        _max_price = self.scraper.get_by_xpath(
+            xpath=elements.AssetsPage.MAX_PRICE
+        ).text
+
         _price = self.scraper.get_by_xpath(
             xpath=elements.AssetsPage.PRICE
         ).text
 
-        data = {'ticket': _ticket, 'price': _price}
+        data = {
+            'ticket': _ticket,
+            'subsector': _subsector,
+            'div_yield': _div_yield,
+            'p_l': _p_l,
+            'p_vp': _p_vp,
+            'ebitda': _ebitda,
+            'roe': _roe,
+            'roic': _roic,
+            'min_price': _min_price,
+            'max_price': _max_price,
+            'price': _price,
+        }
         self.results.append(data)
 
     def open_site(self):
-        self.driver.get(self.url)
+        self.driver.get(self._URL)
         self.driver.maximize_window()
