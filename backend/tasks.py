@@ -3,7 +3,7 @@
 This module is responsible to interact with scraper solutions.
 """
 
-import assets
+from . import assets
 
 
 def get_assets_results(list_of_assets: list) -> tuple:

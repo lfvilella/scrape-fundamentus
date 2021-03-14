@@ -5,8 +5,8 @@ This module is the flask API that handles endpoints.
 
 import flask
 
-import debugger
-import tasks
+from . import debugger
+from . import tasks
 
 
 debugger.initialize_flask_server_debugger_if_needed()
@@ -14,7 +14,7 @@ debugger.initialize_flask_server_debugger_if_needed()
 app = flask.Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/api/v.1/', methods=['GET'])
 def running():
     """Running
 
@@ -26,7 +26,7 @@ def running():
     return flask.jsonify({'detail': 'Running...'}), 200
 
 
-@app.route('/scraper/', methods=['POST'])
+@app.route('/api/v.1/scraper/', methods=['POST'])
 def run_scraper():
     """Run Scraper
 
@@ -52,7 +52,6 @@ def run_scraper():
             ]
           }
     """
-
     if not flask.request.json:
         flask.abort(400)
 

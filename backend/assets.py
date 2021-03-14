@@ -7,8 +7,8 @@ import traceback
 
 from selenium.webdriver.common.keys import Keys
 
-from utils import elements, webdriver
-import cache
+from .utils import elements, webdriver
+from . import cache
 
 
 class AssetsScraper:
