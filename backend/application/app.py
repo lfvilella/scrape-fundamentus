@@ -60,6 +60,6 @@ def run_scraper():
     if not data or not isinstance(data, list):
         flask.abort(400)
 
-    result = tasks.get_assets_results(data)
+    results, errors = tasks.get_assets_results(data)
 
-    return flask.jsonify({'results': result}), 200
+    return flask.jsonify({'results': results, 'errors': errors}), 200

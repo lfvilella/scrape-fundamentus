@@ -31,5 +31,7 @@ gunicorn: build  ## 🦄 Start flask dev with unicorn
 gunicorndebug: ## 🦄 + 🐛 Start flask dev with unicorn and Debug
 	@docker-compose run --rm -e DEBUGGER=True --service-ports app gunicorn --reload --bind 0.0.0.0:5000 --timeout 3600 app:app
 
+down: ## Stop container
+	@docker-compose stop || true
 
 .DEFAULT_GOAL := help
