@@ -6,7 +6,7 @@ This module is responsible to interact with scraper solutions.
 import assets
 
 
-def get_assets_results(list_of_assets: list) -> list:
+def get_assets_results(list_of_assets: list) -> tuple:
     """Get Assets Results
 
     Args:
@@ -33,4 +33,4 @@ def get_assets_results(list_of_assets: list) -> list:
     """
 
     scrape = assets.AssetsScraper(list_of_assets)
-    return scrape.results
+    return scrape.results, scrape.errors
