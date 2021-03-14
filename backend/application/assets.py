@@ -8,6 +8,7 @@ import traceback
 from selenium.webdriver.common.keys import Keys
 
 from utils import elements, webdriver
+import cache
 
 
 class AssetsScraper:
@@ -31,8 +32,12 @@ class AssetsScraper:
         self.open_site()
 
         for ticket in assets:
-            self._fill_search_input(ticket)
+            item_cached = cache.get_item_cached(ticket)
+            if item_cached:
+                self.results.append(item_cached)
+                continue
 
+            self._fill_search_input(ticket)
             try:
                 type_ = self._get_asset_type()
                 if type_ == 'FII':
@@ -107,6 +112,7 @@ class AssetsScraper:
             'price': _price,
         }
         self.results.append(data)
+        cache.set_cache(data)
 
     def get_fiis_data(self):
         _ticket = self.scraper.get_by_xpath(
@@ -145,6 +151,7 @@ class AssetsScraper:
             'price': _price,
         }
         self.results.append(data)
+        cache.set_cache(data)
 
     def open_site(self):
         self.driver.get(self._URL)
