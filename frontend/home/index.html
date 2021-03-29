@@ -35,17 +35,17 @@
 
     :root {
       --white: #fff;
+      --black: #000000;
       --background: #F6F6F6;
       --gray-line: #DCDDE0;
       --text-watermark: #DFDEDE;
       --text: #666666;
       --text-highlight: #B3B9FF;
       --title: #2E384D;
-      --red: #E83F5B;
+      --red-light: rgba(255, 135, 135, 0.9);
       --green: #4CD62B;
-      --blue: #5965E0;
-      --blue-dark: #4953B8;
-      --blue-twitter: #2AA9E0;
+      --blue: #7AAAC6;
+      --blue-dark: #005688;
     }
 
     body {
@@ -58,16 +58,30 @@
       margin-top: 50px;
     }
 
-    .searchBar div i {
+    .searchBar div button {
+      background-color: var(--blue-dark);
       color: var(--white);
       font-size: 24px;
-      background-color: var(--blue-twitter);
-      padding: 10px;
+      padding: 8px;
+      margin-right: -3px;
+      border: none;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    .searchBar div i {
+      padding-bottom: 9px;
     }
 
     .searchBar div input {
       width: 50%;
-      height: 3rem;
+      height: 3.1rem;
+      border: none;
+      background-color: var(--blue);
+      padding-left: 15px;
+      color: var(--white);
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
 
     .mainPage {
@@ -83,18 +97,105 @@
       font-weight: bold;
       color: var(--text-watermark);
     }
+
+    .helper {
+      width: auto;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .helper div {
+      padding: 10px 20px;
+      background-color: var(--text-watermark);
+      color: var(--white);
+      border-radius: 50%;
+    }
+
+    .helper div:hover {
+      border-radius: 10px;
+    }
+
+    .helper div p {
+      display: none;
+    }
+
+    .helper div span {
+      font-size: 24pt;
+    }
+
+    .helper div:hover span {
+      color: var(--blue-dark);
+    }
+
+    .helper div:hover p {
+      margin-top: 10px;
+      display: block;
+      color: var(--black);
+    }
+
+    .error {
+      width: auto;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--red-light);
+      color: var(--white);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--white);
+    }
+
+    .error button {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      font-weight: bold;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: var(--white);
+    }
+
+    .error button:hover {
+      color: var(--text-watermark);
+    }
+
+    .error h3 {
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+
+    .error p {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 
 <body>
   <div id="app">
+    <section class="container helper">
+      <div>
+        <span>?</span>
+        <p>A demora na busca dos ativos <br> está relacionada a quantidade <br> pesquisada.</p>
+      </div>
+    </section>
+
     <header class="container-fluid text-center searchBar">
       <div>
         <button v-on:click="getAssets(search)"><i class="fas fa-search"></i></button>
-        <input type="text" placeholder="Digite o ticket dos ativos" v-model="search">
+        <input type="text" placeholder="TICKET1, TICKET2, TICKET3" v-model="search">
       </div>
     </header>
 
+    <section class="container text-center error" v-if="showErros">
+      <button type="button" v-on:click="cleanErrors()">X</button>
+      <h3>Errors: </h3>
+      <div v-for="(error, ticket) in errors">
+        <p>{{ticket}}: {{error}}</p>
+      </div>
+    </section>
 
     <section class="container-fluid text-center mainPage">
       <div class="spinner-border" role="status" v-if="isLoading">
@@ -161,11 +262,17 @@
       el: '#app',
       data: {
         assetsList: [],
+        errors: { 'aaa': 'Ativo não encontrado.', 'bbb': 'Ativo não encontrado.' },
         search: '',
         isLoading: false,
         showAssets: false,
+        showErros: false,
       },
       methods: {
+        cleanErrors: function () {
+          this.errors = {};
+          this.showErros = false;
+        },
         getFormattedParam: function (search) {
           let _search = search.replace(/\s/g, '');
           _search = _search.split(',');
@@ -194,11 +301,18 @@
                   ticket: row.ticket,
                 })
               );
+
+              if (response.data.errors) {
+                this.errors = response.data.errors;
+                this.showErros = true;
+              }
+
               this.isLoading = false;
               this.showAssets = true;
             })
             .catch((error) => {
               this.assetsList = [];
+              this.errors = {};
               this.isLoading = false;
               console.log(error)
             });
