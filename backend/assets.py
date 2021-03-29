@@ -24,7 +24,7 @@ class AssetsScraper:
         self.scraper = webdriver.BaseScraper()
         self.driver = self.scraper.driver
         self.results = []
-        self.errors = []
+        self.errors = {}
 
         self.start(assets)
 
@@ -47,7 +47,7 @@ class AssetsScraper:
 
             except Exception as error:
                 traceback.print_tb(error.__traceback__)
-                self.errors.append({ticket: 'Ativo não encontrado.'})
+                self.errors[ticket] = 'Ativo não encontrado.'
                 pass
 
         self.scraper.close_connection()

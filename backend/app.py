@@ -49,7 +49,11 @@ def run_scraper():
                     'max_price': '0,00',
                     'price': '0,00',
                 }
-            ]
+            ],
+            'errors': {
+                'TICKET1': 'Ativo não encontrado.',
+                'TICKET2': 'Ativo não encontrado.',
+            }
           }
     """
     if not flask.request.json:

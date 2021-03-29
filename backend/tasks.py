@@ -17,19 +17,24 @@ def get_assets_results(list_of_assets: list) -> tuple:
         list: list of dicts
           [
             {
-                'ticket': 'ABCD1',
-                'subsector': 'SUBSECTOR',
-                'div_yield': '1,1%',
-                'p_l': '11,11',
-                'p_vp': '1,1',
-                'ebitda': '11,11,
-                'roe': '11%',
-                'roic': '1,0%',
-                'min_price': '0,00',
-                'max_price': '0,00',
-                'price': '0,00',
+              'ticket': 'ABCD1',
+              'subsector': 'SUBSECTOR',
+              'div_yield': '1,1%',
+              'p_l': '11,11',
+              'p_vp': '1,1',
+              'ebitda': '11,11,
+              'roe': '11%',
+              'roic': '1,0%',
+              'min_price': '0,00',
+              'max_price': '0,00',
+              'price': '0,00',
             }
           ]
+        errors: dict
+          {
+            'TICKET1': 'Ativo não encontrado.',
+            'TICKET2': 'Ativo não encontrado.'
+          }
     """
 
     scrape = assets.AssetsScraper(list_of_assets)
