@@ -9,7 +9,9 @@
 - VueJS
 
 # Figma Screen Design [HERE](https://www.figma.com/file/UfccaotEi0ksfe8kjOUPSe/ScrapeFundamentus?node-id=24%3A9)
-![Mar-28-2021 22-47-15](https://user-images.githubusercontent.com/45940140/112777076-a150b280-9017-11eb-8bee-3026c7fc7c79.gif)
+![Mar-30-2021 08-55-30](https://user-images.githubusercontent.com/45940140/112984800-b9b6ef00-9135-11eb-8a57-f196f9083ae8.gif)
+
+
 
 # Running Localy
 
