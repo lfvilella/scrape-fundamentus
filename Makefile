@@ -26,10 +26,10 @@ run-debug: ## 🌶 + 🐛 Start flask dev server with Debug
 	@docker-compose run --rm -e DEBUGGER=True -e FLASK_APP=app.py -e FLASK_ENV=development --service-ports app run --host 0.0.0.0
 
 gunicorn:  ## 🦄 Start flask dev with unicorn
-	@docker-compose run --rm --service-ports backend gunicorn --reload --bind 0.0.0.0:5000 app:app
+	@docker-compose run --rm --service-ports backend gunicorn --reload --bind 0.0.0.0:5000 backend.app:app
 
 gunicorndebug: ## 🦄 + 🐛 Start flask dev with unicorn and Debug
-	@docker-compose run --rm -e DEBUGGER=True --service-ports backend gunicorn --reload --bind 0.0.0.0:5000 --timeout 3600 app:app
+	@docker-compose run --rm -e DEBUGGER=True --service-ports backend gunicorn --reload --bind 0.0.0.0:5000 --timeout 3600 backend.app:app
 
 start:
 	@docker-compose start

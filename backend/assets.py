@@ -32,11 +32,6 @@ class AssetsScraper:
         self.open_site()
 
         for ticket in assets:
-            item_cached = cache.get_item_cached(ticket)
-            if item_cached:
-                self.results.append(item_cached)
-                continue
-
             self._fill_search_input(ticket)
             try:
                 type_ = self._get_asset_type()
