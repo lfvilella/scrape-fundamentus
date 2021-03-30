@@ -11,7 +11,7 @@ services:
     working_dir: /app
     stdin_open: true
     tty: true
-    command: ${RUNSERVER:-gunicorn --reload --bind 0.0.0.0:5000 backend.app:app}
+    command: ${RUNSERVER:-gunicorn --reload --bind 0.0.0.0:5000 --timeout 480 backend.app:app}
     networks:
       - backend-network
     restart: ${DOCKER_RESTART:-no}
