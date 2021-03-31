@@ -16,7 +16,8 @@
 # Running Localy
 
 ```
-make build
+$ docker network create nginx-gateway
+$ make build
 ```
 
 Open: http://localhost
